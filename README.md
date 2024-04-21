@@ -1,1 +1,1 @@
-# workshop-springboot3-jpa
+# Workshop Springboot3 JPA
