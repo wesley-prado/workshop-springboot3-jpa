@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Profile;
 
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @Profile("dev")
@@ -71,40 +72,55 @@ public class DevConfig implements CommandLineRunner {
 						OrderStatus.WAITING_PAYMENT
 				)
 		));
-		categoryRepository.saveAll(Arrays.asList(
-				new Category(null, "Electronics"),
-				new Category(null, "Books"),
-				new Category(null, "Computers")
-		));
-		productRepository.saveAll(Arrays.asList(
-				new Product(
-						null,
-						"MacBook Pro",
-						"Apple laptop",
-						2500.0,
-						"https://www.apple.com/macbook-pro-13/"
-				),
-				new Product(
-						null,
-						"PC Gamer",
-						"Custom-built PC",
-						1200.0,
-						"https://www.pcgamer.com/"
-				),
-				new Product(
-						null,
-						"Rails for Dummies",
-						"Ruby on Rails book",
-						100.0,
-						"https://www.amazon.com/Rails-Dummies-Computer-Tech/dp/1118066435"
-				),
-				new Product(
-						null,
-						"Spring Boot for Experts",
-						"Spring Boot book",
-						90.0,
-						"https://www.amazon.com/Spring-Boot-Action-Craig-Walls/dp/1617292540"
-				)
-		));
+		Category c1 = new Category(null, "Electronics");
+		Category c2 = new Category(null, "Books");
+		Category c3 = new Category(null, "Computers");
+
+		categoryRepository.saveAll(List.of(c1, c2, c3));
+
+		Product p1 = new Product(
+				null,
+				"MacBook Pro",
+				"Apple laptop",
+				2500.0,
+				"https://www.apple.com/macbook-pro-13/"
+		);
+		Product p2 = new Product(
+				null,
+				"PC Gamer",
+				"Custom-built PC",
+				1200.0,
+				"https://www.pcgamer.com/"
+		);
+		Product p3 = new Product(
+				null,
+				"Rails for Dummies",
+				"Ruby on Rails book",
+				100.0,
+				"https://www.amazon.com/Rails-Dummies-Computer-Tech/dp/1118066435"
+		);
+		Product p4 = new Product(
+				null,
+				"Spring Boot for Experts",
+				"Spring Boot book",
+				90.0,
+				"https://www.amazon.com/Spring-Boot-Action-Craig-Walls/dp/1617292540"
+		);
+		Product p5 = new Product(
+				null,
+				"Smart TV 4K",
+				"Samsung TV",
+				3000.0,
+				"https://www.samsung.com/br/tvs/uhd-tv/"
+		);
+
+		p1.getCategories().add(c3);
+		p2.getCategories().add(c3);
+		p3.getCategories().add(c2);
+		p4.getCategories().add(c2);
+		p5.getCategories().add(c1);
+		p5.getCategories().add(c3);
+
+		productRepository.saveAll(List.of(p1, p2, p3, p4, p5));
 	}
 }
