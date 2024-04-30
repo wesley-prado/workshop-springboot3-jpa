@@ -1,8 +1,10 @@
 package com.codemages.course.config;
 
+import com.codemages.course.entities.Category;
 import com.codemages.course.entities.User;
 import com.codemages.course.entities.Order;
 import com.codemages.course.entities.enums.OrderStatus;
+import com.codemages.course.repositories.CategoryRepository;
 import com.codemages.course.repositories.OrderRepository;
 import com.codemages.course.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +18,22 @@ import java.util.Arrays;
 @Configuration
 @Profile("dev")
 public class DevConfig implements CommandLineRunner {
-	private final UserRepository  userRepository;
-	private final OrderRepository orderRepository;
+	private final UserRepository     userRepository;
+	private final OrderRepository    orderRepository;
+	private final CategoryRepository categoryRepository;
 
 	@Autowired
-	public DevConfig(UserRepository userRepository, OrderRepository orderRepository) {
+	public DevConfig(
+			UserRepository userRepository,
+			OrderRepository orderRepository,
+			CategoryRepository categoryRepository
+	) {
 		this.userRepository = userRepository;
 		this.orderRepository = orderRepository;
+		this.categoryRepository = categoryRepository;
 	}
 
-	@Override public void run(String... args) throws Exception {
+	@Override public void run(String... args) {
 		User u1 = new User(
 				null,
 				"Wesley Prado",
@@ -48,7 +56,7 @@ public class DevConfig implements CommandLineRunner {
 				"another_client_pass"
 		);
 		userRepository.saveAll(Arrays.asList(u1, u2, u3));
-		orderRepository.saveAllAndFlush(Arrays.asList(
+		orderRepository.saveAll(Arrays.asList(
 				new Order(null, Instant.parse("2024-04-27T23:52:00Z"), u1, OrderStatus.PAID),
 				new Order(null, Instant.parse("2024-04-13T15:25:32Z"), u1, OrderStatus.SHIPPED),
 				new Order(
@@ -57,6 +65,11 @@ public class DevConfig implements CommandLineRunner {
 						u3,
 						OrderStatus.WAITING_PAYMENT
 				)
+		));
+		categoryRepository.saveAll(Arrays.asList(
+				new Category(null, "Electronics"),
+				new Category(null, "Books"),
+				new Category(null, "Computers")
 		));
 	}
 }
