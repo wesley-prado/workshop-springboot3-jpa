@@ -2,6 +2,7 @@ package com.codemages.course.config;
 
 import com.codemages.course.entities.User;
 import com.codemages.course.entities.Order;
+import com.codemages.course.entities.enums.OrderStatus;
 import com.codemages.course.repositories.OrderRepository;
 import com.codemages.course.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,9 +49,14 @@ public class DevConfig implements CommandLineRunner {
 		);
 		userRepository.saveAll(Arrays.asList(u1, u2, u3));
 		orderRepository.saveAllAndFlush(Arrays.asList(
-				new Order(null, Instant.parse("2024-04-27T23:52:00Z"), u1),
-				new Order(null, Instant.parse("2024-04-13T15:25:32Z"), u1),
-				new Order(null, Instant.parse("2023-07-01T23:52:00Z"), u3)
+				new Order(null, Instant.parse("2024-04-27T23:52:00Z"), u1, OrderStatus.PAID),
+				new Order(null, Instant.parse("2024-04-13T15:25:32Z"), u1, OrderStatus.SHIPPED),
+				new Order(
+						null,
+						Instant.parse("2023-07-01T23:52:00Z"),
+						u3,
+						OrderStatus.WAITING_PAYMENT
+				)
 		));
 	}
 }
