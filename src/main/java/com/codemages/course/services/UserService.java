@@ -4,26 +4,25 @@ import com.codemages.course.entities.User;
 import com.codemages.course.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
-	private final UserRepository userRepository;
+	private final UserRepository repository;
 
 	@Autowired
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
+	public UserService(UserRepository repository) {
+		this.repository = repository;
 	}
 
 	public List<User> findAll() {
-		return userRepository.findAll();
+		return repository.findAll();
 	}
 
 	public User findById(Long id) {
-		Optional<User> opt = userRepository.findById(id);
+		Optional<User> opt = repository.findById(id);
 
 		return opt.orElse(null);
 	}
