@@ -124,5 +124,10 @@ public class DevConfig implements CommandLineRunner {
 		OrderItem oi2 = new OrderItem(o2, p5, 10, p5.getPrice());
 
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2));
+
+		Payment pay1 = new Payment(null, Instant.parse("2024-04-13T18:25:32Z"), o1);
+		o1.setPayment(pay1);
+
+		orderRepository.save(o1);
 	}
 }
