@@ -1,14 +1,8 @@
 package com.codemages.course.config;
 
-import com.codemages.course.entities.Category;
-import com.codemages.course.entities.Product;
-import com.codemages.course.entities.User;
-import com.codemages.course.entities.Order;
+import com.codemages.course.entities.*;
 import com.codemages.course.entities.enums.OrderStatus;
-import com.codemages.course.repositories.CategoryRepository;
-import com.codemages.course.repositories.OrderRepository;
-import com.codemages.course.repositories.ProductRepository;
-import com.codemages.course.repositories.UserRepository;
+import com.codemages.course.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -21,22 +15,25 @@ import java.util.List;
 @Configuration
 @Profile("dev")
 public class DevConfig implements CommandLineRunner {
-	private final UserRepository     userRepository;
-	private final OrderRepository    orderRepository;
-	private final CategoryRepository categoryRepository;
-	private final ProductRepository  productRepository;
+	private final UserRepository      userRepository;
+	private final OrderRepository     orderRepository;
+	private final CategoryRepository  categoryRepository;
+	private final ProductRepository   productRepository;
+	private final OrderItemRepository orderItemRepository;
 
 	@Autowired
 	public DevConfig(
 			UserRepository userRepository,
 			OrderRepository orderRepository,
 			CategoryRepository categoryRepository,
-			ProductRepository productRepository
+			ProductRepository productRepository,
+			OrderItemRepository orderItemRepository
 	) {
 		this.userRepository = userRepository;
 		this.orderRepository = orderRepository;
 		this.categoryRepository = categoryRepository;
 		this.productRepository = productRepository;
+		this.orderItemRepository = orderItemRepository;
 	}
 
 	@Override public void run(String... args) {
@@ -62,16 +59,16 @@ public class DevConfig implements CommandLineRunner {
 				"another_client_pass"
 		);
 		userRepository.saveAll(Arrays.asList(u1, u2, u3));
-		orderRepository.saveAll(Arrays.asList(
-				new Order(null, Instant.parse("2024-04-27T23:52:00Z"), u1, OrderStatus.PAID),
-				new Order(null, Instant.parse("2024-04-13T15:25:32Z"), u1, OrderStatus.SHIPPED),
-				new Order(
-						null,
-						Instant.parse("2023-07-01T23:52:00Z"),
-						u3,
-						OrderStatus.WAITING_PAYMENT
-				)
-		));
+		Order o1 = new Order(null, Instant.parse("2024-04-27T23:52:00Z"), u1, OrderStatus.PAID);
+		Order o2 = new Order(null, Instant.parse("2024-04-13T15:25:32Z"), u1, OrderStatus.SHIPPED);
+		Order o3 = new Order(
+				null,
+				Instant.parse("2023-07-01T23:52:00Z"),
+				u3,
+				OrderStatus.WAITING_PAYMENT
+		);
+		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+
 		Category c1 = new Category(null, "Electronics");
 		Category c2 = new Category(null, "Books");
 		Category c3 = new Category(null, "Computers");
@@ -122,5 +119,10 @@ public class DevConfig implements CommandLineRunner {
 		p5.getCategories().add(c3);
 
 		productRepository.saveAll(List.of(p1, p2, p3, p4, p5));
+
+		OrderItem oi1 = new OrderItem(o1, p1, 5, p1.getPrice());
+		OrderItem oi2 = new OrderItem(o2, p5, 10, p5.getPrice());
+
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2));
 	}
 }
