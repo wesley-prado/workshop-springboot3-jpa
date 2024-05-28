@@ -4,6 +4,7 @@ import com.codemages.course.entities.User;
 import com.codemages.course.repositories.UserRepository;
 import com.codemages.course.services.exceptions.DatabaseException;
 import com.codemages.course.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -43,10 +44,14 @@ public class UserService {
 	}
 
 	public User update(Long id, User obj) {
-		User entity = repository.getReferenceById(id);
-		updateUser(entity, obj);
+		try {
+			User entity = repository.getReferenceById(id);
+			updateUser(entity, obj);
 
-		return repository.save(entity);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateUser(User entity, User obj) {
