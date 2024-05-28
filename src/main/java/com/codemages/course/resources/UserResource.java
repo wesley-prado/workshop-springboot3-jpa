@@ -45,6 +45,8 @@ public class UserResource {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		// if no exception is thrown, the user exists
+		userService.findById(id);
 		userService.delete(id);
 
 		return ResponseEntity.noContent().build();
