@@ -13,8 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
-@Profile("dev")
-public class DevConfig implements CommandLineRunner {
+@Profile("test")
+public class TestConfig implements CommandLineRunner {
 	private final UserRepository      userRepository;
 	private final OrderRepository     orderRepository;
 	private final CategoryRepository  categoryRepository;
@@ -22,7 +22,7 @@ public class DevConfig implements CommandLineRunner {
 	private final OrderItemRepository orderItemRepository;
 
 	@Autowired
-	public DevConfig(
+	public TestConfig(
 			UserRepository userRepository,
 			OrderRepository orderRepository,
 			CategoryRepository categoryRepository,
