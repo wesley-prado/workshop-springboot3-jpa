@@ -1,5 +1,12 @@
-FROM openjdk:21-slim
+FROM ubuntu:latest as build
+RUN apt-get update
+RUN apt-get install openjdk-21-jdk -y
+COPY . .
+RUN apt-get install maven -y
+RUN mvn clean install
 
-COPY target/*.jar /app.jar
+FROM openjdk:21-slim
+EXPOSE 8080
+COPY --from=build /target/*.jar /app.jar
 
 ENTRYPOINT ["java", "-jar", "/app.jar"]
