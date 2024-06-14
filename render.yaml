@@ -2,7 +2,6 @@ services:
   - type: web
     name: java-ws
     runtime: docker
-    dockerfilePath: './Dockerfile'
     plan: free
     region: oregon
     disk:
