@@ -1,0 +1,22 @@
+# Exported from Render on 2024-06-15T00:14:21Z
+services:
+- type: web
+  name: workshop-springboot3-jpa
+  runtime: docker
+  repo: https://github.com/wesley-prado/workshop-springboot3-jpa
+  plan: free
+  envVars:
+  - key: JWT_SECRET
+    sync: false
+  - key: JWT_EXPIRATION
+    sync: false
+  - key: DB_USERNAME
+    sync: false
+  - key: DB_URL
+    sync: false
+  - key: DB_PASSWORD
+    sync: false
+  region: oregon
+  dockerContext: .
+  dockerfilePath: ./Dockerfile
+version: "1"
