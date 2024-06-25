@@ -13,13 +13,15 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class) public class UserServiceTest {
+@ExtendWith(MockitoExtension.class)
+public class UserServiceTest {
 
 	@InjectMocks UserService userService;
 
 	@Mock UserRepository userRepository;
 
-	@Test void testFindAll() {
+	@Test
+	void testFindAll() {
 		User user1 = new User(
 				1L,
 				"John Doe",
@@ -49,7 +51,8 @@ import static org.mockito.Mockito.*;
 		verify(userRepository, times(1)).findAll();
 	}
 
-	@Test void testFindById() {
+	@Test
+	void testFindById() {
 		User user1 = new User(
 				1L,
 				"John Doe",
@@ -57,5 +60,16 @@ import static org.mockito.Mockito.*;
 				"(15) 99999-9999",
 				"any_password"
 		);
+
+		when(userRepository.findById(1L)).thenReturn(java.util.Optional.of(user1));
+
+		User result = userService.findById(1L);
+
+		assertEquals(
+				user1,
+				result,
+				"findById should return the expected user"
+		);
+		verify(userRepository, times(1)).findById(1L);
 	}
 }
