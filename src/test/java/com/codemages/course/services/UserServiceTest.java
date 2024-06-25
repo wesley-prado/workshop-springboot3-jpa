@@ -13,19 +13,20 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
-public class UserServiceTest {
+@ExtendWith(MockitoExtension.class) public class UserServiceTest {
 
-	@InjectMocks
-	UserService userService;
+	@InjectMocks UserService userService;
 
-	@Mock
-	UserRepository userRepository;
+	@Mock UserRepository userRepository;
 
-	@Test
-	void testFindAll() {
-		User user1 =
-				new User(1L, "John Doe", "jhon.doe@mail.com", "(15) 99999-9999", "any_password");
+	@Test void testFindAll() {
+		User user1 = new User(
+				1L,
+				"John Doe",
+				"jhon.doe@mail.com",
+				"(15) 99999-9999",
+				"any_password"
+		);
 		User user2 = new User(
 				2L,
 				"Jane Doe",
@@ -40,7 +41,21 @@ public class UserServiceTest {
 		List<User> result = userService.findAll();
 
 		assertEquals(2, result.size(), "findAll should return 2 users");
-		assertEquals(expectedOutput, result, "findAll should return the expected output");
+		assertEquals(
+				expectedOutput,
+				result,
+				"findAll should return the expected output"
+		);
 		verify(userRepository, times(1)).findAll();
+	}
+
+	@Test void testFindById() {
+		User user1 = new User(
+				1L,
+				"John Doe",
+				"jhon.doe@mail.com",
+				"(15) 99999-9999",
+				"any_password"
+		);
 	}
 }
