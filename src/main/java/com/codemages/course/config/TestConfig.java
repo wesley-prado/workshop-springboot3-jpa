@@ -59,8 +59,16 @@ public class TestConfig implements CommandLineRunner {
 				"another_client_pass"
 		);
 		userRepository.saveAll(Arrays.asList(u1, u2, u3));
-		Order o1 = new Order(null, Instant.parse("2024-04-27T23:52:00Z"), u1, OrderStatus.PAID);
-		Order o2 = new Order(null, Instant.parse("2024-04-13T15:25:32Z"), u1, OrderStatus.SHIPPED);
+		Order o1 = new Order(null,
+							 Instant.parse("2024-04-27T23:52:00Z"),
+							 u1,
+							 OrderStatus.PAID
+		);
+		Order o2 = new Order(null,
+							 Instant.parse("2024-04-13T15:25:32Z"),
+							 u1,
+							 OrderStatus.SHIPPED
+		);
 		Order o3 = new Order(
 				null,
 				Instant.parse("2023-07-01T23:52:00Z"),
@@ -94,14 +102,16 @@ public class TestConfig implements CommandLineRunner {
 				"Rails for Dummies",
 				"Ruby on Rails book",
 				100.0,
-				"https://www.amazon.com/Rails-Dummies-Computer-Tech/dp/1118066435"
+				"https://www.amazon.com/Rails-Dummies-Computer-Tech/dp" +
+				"/1118066435"
 		);
 		Product p4 = new Product(
 				null,
 				"Spring Boot for Experts",
 				"Spring Boot book",
 				90.0,
-				"https://www.amazon.com/Spring-Boot-Action-Craig-Walls/dp/1617292540"
+				"https://www.amazon.com/Spring-Boot-Action-Craig-Walls/dp" +
+				"/1617292540"
 		);
 		Product p5 = new Product(
 				null,
@@ -127,7 +137,8 @@ public class TestConfig implements CommandLineRunner {
 
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 
-		Payment pay1 = new Payment(null, Instant.parse("2024-04-13T18:25:32Z"), o1);
+		Payment pay1 =
+				new Payment(null, Instant.parse("2024-04-13T18:25:32Z"), o1);
 		o1.setPayment(pay1);
 
 		orderRepository.save(o1);
