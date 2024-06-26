@@ -59,7 +59,7 @@ mvn test
 To generate a JaCoCo coverage report, use the following command:
 
 ```bash
-mvn clean org.jacoco:jacoco-maven-plugin:0.8.12:prepare-agent  verify org.jacoco:jacoco-maven-plugin:0.8.12:report
+mvn jacoco:report
 ```
 
 The report will be generated in the target/site/jacoco directory.
