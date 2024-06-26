@@ -4,8 +4,10 @@ import com.codemages.course.entities.User;
 import com.codemages.course.repositories.UserRepository;
 import com.codemages.course.services.exceptions.DatabaseException;
 import com.codemages.course.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -134,6 +136,25 @@ public class UserServiceTest {
 
 		assertEquals(
 				"Test exception",
+				e.getMessage(),
+				"Incorrect exception message"
+		);
+	}
+
+	@Test
+	void update_WhenUserNotExists_ThrowException() {
+		Long id = 1L;
+		User userDTO = generateUserDTOMock();
+
+		when(userRepository.getReferenceById(id)).thenThrow(new EntityNotFoundException());
+
+		Exception e = assertThrows(
+				ResourceNotFoundException.class,
+				() -> userService.update(id, userDTO)
+		);
+
+		assertEquals(
+				"Resource not found. Id " + id,
 				e.getMessage(),
 				"Incorrect exception message"
 		);
