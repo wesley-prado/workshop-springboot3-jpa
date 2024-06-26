@@ -172,10 +172,9 @@ public class UserServiceTest {
 				"+55 (15) 99999-9999",
 				"another_password"
 		);
-		User expectedResponse = generateUserMock();
 
 		when(userRepository.getReferenceById(id)).thenReturn(new User());
-		when(userRepository.save(any(User.class))).thenReturn(expectedResponse);
+		when(userRepository.save(any(User.class))).thenReturn(generateUserMock());
 
 		userService.update(id, userDTO);
 
