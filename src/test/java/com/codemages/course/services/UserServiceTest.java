@@ -90,9 +90,7 @@ public class UserServiceTest {
 
 	@Test
 	void insert() {
-		User userDTO = generateUserMock();
-		userDTO.setId(null);
-
+		User userDTO = generateUserDTOMock();
 		User expectedResponse = new User(
 				1L,
 				userDTO.getName(),
@@ -100,6 +98,7 @@ public class UserServiceTest {
 				userDTO.getPhone(),
 				userDTO.getPassword()
 		);
+
 		when(userRepository.save(userDTO)).thenReturn(expectedResponse);
 
 		User actualResponse = userService.insert(userDTO);
@@ -140,10 +139,14 @@ public class UserServiceTest {
 		);
 	}
 
-	@Test
-	void update() {}
-
 	/*Helpers*/
+	private static User generateUserDTOMock() {
+		User userDTO = generateUserMock();
+		userDTO.setId(null);
+
+		return userDTO;
+	}
+
 	private static User generateUserMock() {
 		return new User(
 				1L,
