@@ -160,6 +160,27 @@ public class UserServiceTest {
 		);
 	}
 
+	@Test
+	void update_WhenUserExists_UserFieldsAreUpdated() {
+		ArgumentCaptor<User> argumentCaptor =
+				ArgumentCaptor.forClass(User.class);
+		Long id = 1L;
+		User userDTO = generateUserDTOMock();
+		User expectedResponse = generateUserMock();
+
+		when(userRepository.getReferenceById(id)).thenReturn(new User());
+		when(userRepository.save(any(User.class))).thenReturn(expectedResponse);
+
+		userService.update(id, userDTO);
+
+		verify(userRepository).save(argumentCaptor.capture());
+
+		User updatedUser = argumentCaptor.getValue();
+		assertEquals(userDTO.getName(), updatedUser.getName());
+		assertEquals(userDTO.getEmail(), updatedUser.getEmail());
+		assertEquals(userDTO.getPhone(), updatedUser.getPhone());
+	}
+
 	/*Helpers*/
 	private static User generateUserDTOMock() {
 		User userDTO = generateUserMock();
