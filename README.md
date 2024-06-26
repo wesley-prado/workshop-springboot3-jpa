@@ -17,6 +17,8 @@ and orders.
 - PostgreSQL 42.7.3
 - H2 Database
 - JaCoCo 0.8.12 for code coverage
+- Docker
+- Render (Deployment)
 
 ## Setup
 
