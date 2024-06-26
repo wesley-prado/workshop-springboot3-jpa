@@ -52,7 +52,24 @@ public class UserServiceTest {
 	}
 
 	@Test
-	void testFindById() {
+	void testFindById_Success() {
+		User expectedResponse = generateUserMock();
+
+		when(userRepository.findById(1L)).thenReturn(java.util.Optional.of(
+				expectedResponse));
+
+		User actualResponse = userService.findById(1L);
+
+		verify(userRepository, times(1)).findById(1L);
+		assertEquals(
+				expectedResponse,
+				actualResponse,
+				"findById should return the expected user"
+		);
+	}
+
+	@Test
+	void testFindById_Exception() {
 		User expectedResponse = generateUserMock();
 
 		when(userRepository.findById(1L)).thenReturn(java.util.Optional.of(
