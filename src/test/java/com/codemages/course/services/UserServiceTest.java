@@ -2,6 +2,7 @@ package com.codemages.course.services;
 
 import com.codemages.course.entities.User;
 import com.codemages.course.repositories.UserRepository;
+import com.codemages.course.services.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -9,8 +10,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -69,24 +71,18 @@ public class UserServiceTest {
 	}
 
 	@Test
-	void testFindById_Exception() {
-		User expectedResponse = generateUserMock();
+	void testFindById_ResourceNotFoundException() {
+		when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
-		when(userRepository.findById(1L)).thenReturn(java.util.Optional.of(
-				expectedResponse));
-
-		User actualResponse = userService.findById(1L);
-
-		assertEquals(
-				expectedResponse,
-				actualResponse,
-				"findById should return the expected user"
+		Exception e = assertThrows(
+				ResourceNotFoundException.class,
+				() -> userService.findById(1L)
 		);
-		verify(userRepository, times(1)).findById(1L);
+
 		assertEquals(
-				expectedResponse,
-				actualResponse,
-				"findById should return the expected user"
+				"Resource not found. Id 1",
+				e.getMessage(),
+				"Incorrect exception message"
 		);
 	}
 
