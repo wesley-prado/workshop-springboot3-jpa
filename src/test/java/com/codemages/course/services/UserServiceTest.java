@@ -53,23 +53,46 @@ public class UserServiceTest {
 
 	@Test
 	void testFindById() {
-		User user1 = new User(
+		User expectedResponse = generateUserMock();
+
+		when(userRepository.findById(1L)).thenReturn(java.util.Optional.of(
+				expectedResponse));
+
+		User actualResponse = userService.findById(1L);
+
+		assertEquals(
+				expectedResponse,
+				actualResponse,
+				"findById should return the expected user"
+		);
+		verify(userRepository, times(1)).findById(1L);
+		assertEquals(
+				expectedResponse,
+				actualResponse,
+				"findById should return the expected user"
+		);
+	}
+
+	@Test
+	void testInsert() {
+	}
+
+	@Test
+	void testDelete() {}
+
+	@Test
+	void testUpdate() {}
+
+	@Test
+	void testUpdateUser() {}
+
+	private static User generateUserMock() {
+		return new User(
 				1L,
 				"John Doe",
 				"jhon.doe@mail.com",
 				"(15) 99999-9999",
 				"any_password"
 		);
-
-		when(userRepository.findById(1L)).thenReturn(java.util.Optional.of(user1));
-
-		User result = userService.findById(1L);
-
-		assertEquals(
-				user1,
-				result,
-				"findById should return the expected user"
-		);
-		verify(userRepository, times(1)).findById(1L);
 	}
 }
