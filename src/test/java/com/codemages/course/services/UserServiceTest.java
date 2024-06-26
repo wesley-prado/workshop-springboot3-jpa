@@ -23,7 +23,7 @@ public class UserServiceTest {
 	@Mock UserRepository userRepository;
 
 	@Test
-	void testFindAll() {
+	void findAll() {
 		User user1 = new User(
 				1L,
 				"John Doe",
@@ -54,7 +54,7 @@ public class UserServiceTest {
 	}
 
 	@Test
-	void testFindById_Success() {
+	void findById_WhenUserExists_ReturnsUser() {
 		User expectedResponse = generateUserMock();
 
 		when(userRepository.findById(1L)).thenReturn(java.util.Optional.of(
@@ -71,7 +71,7 @@ public class UserServiceTest {
 	}
 
 	@Test
-	void testFindById_ResourceNotFoundException() {
+	void findById_WhenUserNotExists_ThrowException() {
 		when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
 		Exception e = assertThrows(
@@ -87,17 +87,14 @@ public class UserServiceTest {
 	}
 
 	@Test
-	void testInsert() {
+	void insert() {
 	}
 
 	@Test
-	void testDelete() {}
+	void delete() {}
 
 	@Test
-	void testUpdate() {}
-
-	@Test
-	void testUpdateUser() {}
+	void update() {}
 
 	private static User generateUserMock() {
 		return new User(
