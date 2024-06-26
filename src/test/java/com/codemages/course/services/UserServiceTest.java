@@ -122,6 +122,25 @@ public class UserServiceTest {
 	}
 
 	@Test
+	void delete_DataIntegrityViolationException() {
+		Long id = 1L;
+
+		doThrow(new DataIntegrityViolationException("Test exception")).when(
+				userRepository).deleteById(id);
+
+		Exception e = assertThrows(
+				DatabaseException.class,
+				() -> userService.delete(id)
+		);
+
+		assertEquals(
+				"Test exception",
+				e.getMessage(),
+				"Incorrect exception message"
+		);
+	}
+
+	@Test
 	void update() {}
 
 	/*Helpers*/
