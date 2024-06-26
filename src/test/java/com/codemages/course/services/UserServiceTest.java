@@ -88,14 +88,37 @@ public class UserServiceTest {
 
 	@Test
 	void insert() {
+		User userDTO = generateUserMock();
+		userDTO.setId(null);
+
+		User expectedResponse = new User(
+				1L,
+				userDTO.getName(),
+				userDTO.getEmail(),
+				userDTO.getPhone(),
+				userDTO.getPassword()
+		);
+		when(userRepository.save(userDTO)).thenReturn(expectedResponse);
+
+		User actualResponse = userService.insert(userDTO);
+
+		verify(userRepository, times(1)).save(userDTO);
+		assertEquals(
+				expectedResponse,
+				actualResponse,
+				"O usuário retornados é diferente do esperado"
+		);
 	}
 
 	@Test
-	void delete() {}
+	void delete() {
+
+	}
 
 	@Test
 	void update() {}
 
+	/*Helpers*/
 	private static User generateUserMock() {
 		return new User(
 				1L,
