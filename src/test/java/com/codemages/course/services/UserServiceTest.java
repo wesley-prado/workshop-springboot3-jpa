@@ -2,12 +2,14 @@ package com.codemages.course.services;
 
 import com.codemages.course.entities.User;
 import com.codemages.course.repositories.UserRepository;
+import com.codemages.course.services.exceptions.DatabaseException;
 import com.codemages.course.services.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.List;
 import java.util.Optional;
@@ -111,8 +113,12 @@ public class UserServiceTest {
 	}
 
 	@Test
-	void delete() {
+	void delete_Success() {
+		Long id = 1L;
 
+		userService.delete(id);
+
+		verify(userRepository, times(1)).deleteById(id);
 	}
 
 	@Test
