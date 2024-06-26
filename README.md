@@ -4,8 +4,10 @@ This is a demo project for Spring Boot, developed in Java and built with Maven.
 
 ## Description
 
-This project is a simple Spring Boot application that provides a RESTful API for managing users. It
-includes features such as creating, retrieving, updating, and deleting users.
+This project is a simple Spring Boot application that provides a RESTful API for managing users and
+orders. It
+includes features such as creating, retrieving, updating, and deleting users, products, categories
+and orders.
 
 ## Technologies
 
