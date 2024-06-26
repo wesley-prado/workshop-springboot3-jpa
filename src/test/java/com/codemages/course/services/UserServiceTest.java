@@ -144,13 +144,7 @@ public class UserServiceTest {
 	@Test
 	void update_WhenUserNotExists_ThrowException() {
 		Long id = 1L;
-		User userDTO = new User(
-				null,
-				"Wesley Prado",
-				"wesleyprado.dev@gmail.com",
-				"+55 (15) 99999-9999",
-				"another_password"
-		);
+		User userDTO = generateUserDTOMock();
 
 		when(userRepository.getReferenceById(id)).thenThrow(new EntityNotFoundException());
 
@@ -171,7 +165,13 @@ public class UserServiceTest {
 		ArgumentCaptor<User> argumentCaptor =
 				ArgumentCaptor.forClass(User.class);
 		Long id = 1L;
-		User userDTO = generateUserDTOMock();
+		User userDTO = new User(
+				null,
+				"Wesley Prado",
+				"wesleyprado.dev@gmail.com",
+				"+55 (15) 99999-9999",
+				"another_password"
+		);
 		User expectedResponse = generateUserMock();
 
 		when(userRepository.getReferenceById(id)).thenReturn(new User());
