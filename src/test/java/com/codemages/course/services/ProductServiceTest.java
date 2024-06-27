@@ -54,7 +54,7 @@ public class ProductServiceTest {
 	}
 
 	@Test
-	void findById_productFound() {
+	void findById_WhenProductExists() {
 		Product expectedProduct = new Product(
 				1L,
 				"Smart TV 50” 4K Ultra HD",
@@ -78,7 +78,7 @@ public class ProductServiceTest {
 	}
 
 	@Test
-	void findById_productNotFound() {
+	void findById_WhenProductDoesNotExist() {
 		when(productRepository.findById(1L)).thenReturn(java.util.Optional.empty());
 
 		Product actualProduct = productService.findById(1L);
